@@ -1,0 +1,34 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+
+<PageTitle>HamoodiMathGame</PageTitle>
+
+<div class="Home">
+
+    <h1>Game</h1>
+
+    <p class="Subtitle">
+        YOU suck
+    </p>
+
+    <button class = "PlayButton" @onclick="PlayGame">
+        ▶ Play
+    </button>
+
+    <button class="settings-button">
+        ⚙ Settings
+    </button>
+
+    <p class="score">
+        Best Score: 0
+    </p>
+
+</div>
+
+@code
+{
+    void PlayGame()
+    {
+        Navigation.NavigateTo("/game");
+    }
+}

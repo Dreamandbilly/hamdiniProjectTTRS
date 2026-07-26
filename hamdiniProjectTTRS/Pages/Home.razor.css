@@ -1,0 +1,61 @@
+/* CSS for Home component */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.home {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #4f46e5, #2563eb);
+    color: white;
+    gap: 18px;
+}
+
+h1 {
+    font-size: 56px;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 22px;
+    opacity: .9;
+}
+
+.PlayButton,
+.settings-button {
+    width: 260px;
+    height: 65px;
+    font-size: 24px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.PlayButton {
+    background: #22c55e;
+    color: red;
+}
+
+    .PlayButton:hover {
+        transform: scale(1.05);
+        background: #16a34a;
+    }
+
+.settings-button {
+    background: white;
+    color: blue;
+}
+
+    .settings-button:hover {
+        transform: scale(1.05);
+    }
+
+.score {
+    margin-top: 20px;
+    font-size: 20px;
+}

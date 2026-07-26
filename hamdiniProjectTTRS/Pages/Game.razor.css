@@ -1,0 +1,61 @@
+/* CSS for Game component */
+.game {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: mediumpurple;
+    color: greenyellow;
+    padding: 40px;
+}
+
+.incorrect {
+    color: red;
+    border: 3px solid red;
+}}
+
+.Top-Bar {
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.Question {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.answer-box {
+    width: 300px;
+    height: 60px;
+    text-align: center;
+    font-size: 32px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 40px;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 15px;
+}
+
+    .keypad button {
+        height: 80px;
+        font-size: 30px;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        background: #3b82f6;
+        color: white;
+        transition: .2s;
+    }
+
+        .keypad button:hover {
+            transform: scale(1.05);
+            background: #2563eb;
+        }

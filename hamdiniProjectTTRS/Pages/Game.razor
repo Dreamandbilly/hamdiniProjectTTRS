@@ -1,0 +1,188 @@
+﻿@page "/game"
+@using Microsoft.AspNetCore.Components.Web
+@using System.Timers
+@inject NavigationManager Navigation
+
+
+
+<PageTitle>Game</PageTitle>
+
+<h1>Multiplication Game</h1>
+<div class = "game">
+   <div class="Top-Bar">
+        <h2>Score: @score</h2>
+
+        <h2>Time: @TimeRemaining</h2>
+
+        <h2> Next Question : @num1 x @num2  </h2>
+   </div>
+      
+   <div class="Question">
+        @num1 x @num2 = 
+   </div>
+    <input class="answer-box @(IsIncorrectAnswer ? "incorrect" : "")"
+   type="text"
+   readonly
+   value="@PlayerAnswer"
+   @onkeydown="KeyEvent"
+   
+   />
+
+   <div class="keypad">
+
+        <button @onclick="() => AddDigit(7)">7</button>
+        <button @onclick="() => AddDigit(8)">8</button>
+        <button @onclick="() => AddDigit(9)">9</button>
+
+       <button @onclick="() => AddDigit(4)">4</button>
+       <button @onclick="() => AddDigit(5)">5</button>
+       <button @onclick="() => AddDigit(6)">6</button>
+
+        <button @onclick="() => AddDigit(1)">1</button>
+        <button @onclick="() => AddDigit(2)">2</button>
+        <button @onclick="() => AddDigit(3)">3</button>
+
+        <button @onclick="() => DeleteLastDigit()">⌫</button>
+        <button @onclick="() => AddDigit(0)">0</button>
+        <button @onclick="() => CheckAnswer()">Check</button>
+   </div>
+
+</div>
+
+
+@code
+{
+
+    Random random = new Random();
+
+
+    int num1;
+    int num2;
+    bool IsIncorrectAnswer = false;
+    int correctAnswer;
+
+    string PlayerAnswer = "";
+    int score = 0;
+
+    protected override void OnInitialized()
+    {
+        NewQuestion();
+        GameTimer = new Timer(1000);
+        GameTimer.Elapsed += TimerTick;
+        GameTimer.Start();
+    }
+
+
+
+    void NewQuestion()
+    {
+        num1 = random.Next(1, 12);
+        num2 = random.Next(1, 12);
+        correctAnswer = num1 * num2;
+        PlayerAnswer = "";
+
+    } 
+
+
+    async Task CheckAnswer()
+    {
+        if (int.TryParse(PlayerAnswer, out int playerAnswerInt))
+        {
+            if (playerAnswerInt == correctAnswer)
+            {
+                score++;
+                NewQuestion();
+            }
+            else
+            {
+                IsIncorrectAnswer = true;
+                PlayerAnswer = "Incorrect !!! ";
+
+                StateHasChanged();
+
+                await Task.Delay(1000); // Wait for 1 second
+
+
+                IsIncorrectAnswer = false;
+                PlayerAnswer = "";
+
+
+
+
+                // Handle incorrect answer (e.g., show a message or reset the game)
+            }
+        }
+        else
+        {
+            // Handle invalid input (e.g., show a message)
+        }
+    }
+    void DeleteLastDigit()
+    {
+        if (PlayerAnswer.Length > 0)
+        {
+            PlayerAnswer = PlayerAnswer.Substring(0, PlayerAnswer.Length - 1);
+        }
+    }
+    void AddDigit(int digit)
+    {
+        PlayerAnswer += digit.ToString();
+
+
+    }
+    Timer? GameTimer;
+    int TimeRemaining = 60;
+
+    protected void OnInitialised()
+    {
+        NewQuestion();
+
+        GameTimer = new Timer(1000); // 1 second interval
+        GameTimer.Elapsed += TimerTick;
+        GameTimer.Start();
+
+
+    }
+    void TimerTick(object? sender, ElapsedEventArgs e)
+    {
+        if (TimeRemaining > 0)
+        {
+            TimeRemaining--;
+
+            InvokeAsync(StateHasChanged);
+        }
+        else
+        {
+            GameTimer?.Stop();
+
+            InvokeAsync(() =>
+            {
+                Navigation.NavigateTo("/");
+            });
+        }
+    }
+
+   
+    void KeyEvent(KeyboardEventArgs e)
+    {
+        if (e.Key == "Backspace")
+        {
+            DeleteLastDigit();
+        }
+        else if (e.Key == "Enter")
+        {
+            CheckAnswer();
+        }
+        else if (int.TryParse(e.Key, out int digit))
+        {
+            AddDigit(digit);
+        }
+    }
+
+    
+    
+
+    
+}
+
+  
