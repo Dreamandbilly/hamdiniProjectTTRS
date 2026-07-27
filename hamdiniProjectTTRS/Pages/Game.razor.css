@@ -39,6 +39,7 @@
 }
 
 .keypad {
+    touch-action: manipulation;
     display: grid;
     grid-template-columns: repeat(3, 100px);
     gap: 15px;
